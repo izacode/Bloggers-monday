@@ -13,32 +13,34 @@ export type BloggerType = {
   youtubeURI: string;
 };
 
+// ,
+//   {
+//     id: 2,
+//     name: "Blogger-02",
+//     youtubeURI: "https://www.youtube.com/Blogger-02",
+//   },
+//   {
+//     id: 3,
+//     name: "Blogger-03",
+//     youtubeURI: "https://www.youtube.com/Blogger-03",
+//   },
+//   {
+//     id: 4,
+//     name: "Blogger-04",
+//     youtubeURI: "https://www.youtube.com/Blogger-04",
+//   },
+//   {
+//     id: 5,
+//     name: "Blogger-05",
+//     youtubeURI: "https://www.youtube.com/Blogger-05",
+//   },
+
 export const bloggers: BloggerType[] = [
   {
     id: 1,
     name: "Blogger-01",
     youtubeURI: "https://www.youtube.com/Blogger-01",
-  },
-  {
-    id: 2,
-    name: "Blogger-02",
-    youtubeURI: "https://www.youtube.com/Blogger-02",
-  },
-  {
-    id: 3,
-    name: "Blogger-03",
-    youtubeURI: "https://www.youtube.com/Blogger-03",
-  },
-  {
-    id: 4,
-    name: "Blogger-04",
-    youtubeURI: "https://www.youtube.com/Blogger-04",
-  },
-  {
-    id: 5,
-    name: "Blogger-05",
-    youtubeURI: "https://www.youtube.com/Blogger-05",
-  },
+  }
 ];
 
 export const posts: PostType[] = [
