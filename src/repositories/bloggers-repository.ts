@@ -37,7 +37,7 @@ export const bloggersRepository = {
   },
   getBlogger(id: number) {
     const blogger = bloggers.find((b: BloggerType) => b.id === id);
-    return blogger;
+    return blogger===null;
   },
 
   createBlogger(name: string, youtubeUrl: string) {
@@ -86,23 +86,23 @@ export const bloggersRepository = {
         youtubeUrl,
       };
 
-      bloggers.splice(bloggerIndex, 1, updatedBlogger);
-      return updatedBlogger;
+      const isUpdated = bloggers.splice(bloggerIndex, 1, updatedBlogger);
+      return isUpdated !== [];
     }
   },
 
   deleteBlogger(id: number) {
     const blogger = bloggers.find((b: BloggerType) => b.id === id);
 
-    if (isNaN(id) || !blogger) {
-      error.errorMessage = {
-        message: "Invalid ID  or blogger doesn't exists",
-        field: "id",
-      };
-      return error;
-    }
+    // if (isNaN(id) || !blogger) {
+    //   error.errorMessage = {
+    //     message: "Invalid ID  or blogger doesn't exists",
+    //     field: "id",
+    //   };
+    //   return error;
+    // }
     const bloggerIndex = bloggers.findIndex((b: BloggerType) => b.id === id);
-    bloggers.splice(bloggerIndex, 1);
-    return bloggers;
+    const isDeleted = bloggers.splice(bloggerIndex, 1);
+    return isDeleted!==[]
   },
 };

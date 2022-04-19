@@ -30,16 +30,16 @@ bloggersRouter.post("/", nameValidation, inputValidationMiddleware, (req: Reques
 
 bloggersRouter.get("/:id", (req: Request, res: Response) => {
   const blogger = bloggersRepository.getBlogger(+req.params.id);
-  res.json(blogger);
+  blogger ? res.json(blogger) : res.sendStatus(404);
 });
 
 bloggersRouter.put("/:id", bloggerIDValidation, nameValidation, inputValidationMiddleware, (req: Request, res: Response) => {
   const updatedBlogger = bloggersRepository.updateBlogger(+req.params.id, req.body.name, req.body.youtubeUrl);
 
-  errorCheck(updatedBlogger, res);
+  updatedBlogger ? res.sendStatus(204) : res.sendStatus(404);
 });
 
 bloggersRouter.delete("/:id", (req: Request, res: Response) => {
-  const bloggers = bloggersRepository.deleteBlogger(+req.params.id);
-  errorCheck(bloggers, res);
+  const isDeleted = bloggersRepository.deleteBlogger(+req.params.id);
+  isDeleted ? res.sendStatus(204) : res.sendStatus(404);
 });
