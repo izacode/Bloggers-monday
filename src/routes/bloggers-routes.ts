@@ -24,7 +24,7 @@ bloggersRouter.get("/", (req: Request, res: Response) => {
 });
 
 bloggersRouter.post("/", nameValidation, inputValidationMiddleware, (req: Request, res: Response) => {
-  const newBlogger = bloggersRepository.createBlogger(req.body.name, req.body.youtubeURI);
+  const newBlogger = bloggersRepository.createBlogger(req.body.name, req.body.youtubeUrl);
   errorCheck(newBlogger, res);
 });
 
@@ -34,7 +34,7 @@ bloggersRouter.get("/:id", (req: Request, res: Response) => {
 });
 
 bloggersRouter.put("/:id", bloggerIDValidation, nameValidation, inputValidationMiddleware, (req: Request, res: Response) => {
-  const updatedBlogger = bloggersRepository.updateBlogger(+req.params.id, req.body.name, req.body.youtubeURI);
+  const updatedBlogger = bloggersRepository.updateBlogger(+req.params.id, req.body.name, req.body.youtubeUrl);
 
   errorCheck(updatedBlogger, res);
 });

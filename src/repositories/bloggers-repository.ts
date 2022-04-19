@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 
 import { BloggerType, bloggers } from "./db";
 
@@ -6,7 +5,7 @@ type ErrorType = {
   data: {
     id?: number;
     name?: string;
-    youtubeURI?: string;
+    youtubeUrl?: string;
     title?: string;
     shortDescription?: string;
     content?: string;
@@ -41,14 +40,14 @@ export const bloggersRepository = {
     return blogger;
   },
 
-  createBlogger(name: string, youtubeURI: string) {
-    if (!isValidYoutubeURI(youtubeURI, re)) {
+  createBlogger(name: string, youtubeUrl: string) {
+    if (!isValidYoutubeURI(youtubeUrl, re)) {
       error.data = {
-        youtubeURI: youtubeURI,
+        youtubeUrl: youtubeUrl,
       };
       error.errorMessage = {
         message: "invalid youtube URI",
-        field: "youtubeURI",
+        field: "youtubeUrl",
       };
       error.resultCode = 1;
 
@@ -57,14 +56,14 @@ export const bloggersRepository = {
       const newBlogger: BloggerType = {
         id: Number(bloggers.length + 1),
         name: name,
-        youtubeURI: youtubeURI,
+        youtubeUrl: youtubeUrl,
       };
       bloggers.push(newBlogger);
       return newBlogger;
     }
   },
 
-  updateBlogger(id: number, name: string, youtubeURI: string) {
+  updateBlogger(id: number, name: string, youtubeUrl: string) {
     const blogger = bloggers.find((b: BloggerType) => b.id === id);
     const bloggerIndex = bloggers.findIndex((b: BloggerType) => b.id === id);
 
@@ -74,7 +73,7 @@ export const bloggersRepository = {
         field: "id",
       };
       return error;
-    } else if (!isValidYoutubeURI(youtubeURI, re)) {
+    } else if (!isValidYoutubeURI(youtubeUrl, re)) {
       error.errorMessage = {
         message: "invalid youtube URI",
         field: "youtubeURI",
@@ -84,7 +83,7 @@ export const bloggersRepository = {
       const updatedBlogger: BloggerType = {
         id,
         name,
-        youtubeURI,
+        youtubeUrl,
       };
 
       bloggers.splice(bloggerIndex, 1, updatedBlogger);

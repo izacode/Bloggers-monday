@@ -10,7 +10,7 @@ export type PostType = {
 export type BloggerType = {
   id: number;
   name: string;
-  youtubeURI: string;
+  youtubeUrl: string;
 };
 
 // ,
@@ -39,8 +39,8 @@ export const bloggers: BloggerType[] = [
   {
     id: 1,
     name: "Blogger-01",
-    youtubeURI: "https://www.youtube.com/Blogger-01",
-  }
+    youtubeUrl: "https://www.youtube.com/Blogger-01",
+  },
 ];
 
 export const posts: PostType[] = [
