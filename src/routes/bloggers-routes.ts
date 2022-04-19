@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { bloggersRepository, error } from "../repositories/bloggers-repository";
 import { body, param } from "express-validator";
-import { inputValidationMiddleware } from "../middleware/inputValidation";
+import { inputValidationMiddleware,youtubeUrlValidation } from "../middleware/inputValidation";
 
 export const bloggersRouter = Router();
 const errorCheck = (value: any, res: Response) => {
@@ -23,9 +23,9 @@ bloggersRouter.get("/", (req: Request, res: Response) => {
   res.json(bloggers);
 });
 
-bloggersRouter.post("/", nameValidation, inputValidationMiddleware, (req: Request, res: Response) => {
+bloggersRouter.post("/", nameValidation,youtubeUrlValidation, inputValidationMiddleware, (req: Request, res: Response) => {
   const newBlogger = bloggersRepository.createBlogger(req.body.name, req.body.youtubeUrl);
-  errorCheck(newBlogger, res);
+  res.status(201).json(newBlogger)
 });
 
 bloggersRouter.get("/:id", (req: Request, res: Response) => {
@@ -33,7 +33,7 @@ bloggersRouter.get("/:id", (req: Request, res: Response) => {
   blogger ? res.json(blogger) : res.sendStatus(404);
 });
 
-bloggersRouter.put("/:id", bloggerIDValidation, nameValidation, inputValidationMiddleware, (req: Request, res: Response) => {
+bloggersRouter.put("/:id", bloggerIDValidation,youtubeUrlValidation, nameValidation, inputValidationMiddleware, (req: Request, res: Response) => {
   const updatedBlogger = bloggersRepository.updateBlogger(+req.params.id, req.body.name, req.body.youtubeUrl);
 
   updatedBlogger ? res.sendStatus(204) : res.sendStatus(404);

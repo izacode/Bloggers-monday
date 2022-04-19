@@ -1,4 +1,3 @@
-
 import { BloggerType, bloggers } from "./db";
 
 type ErrorType = {
@@ -37,30 +36,21 @@ export const bloggersRepository = {
   },
   getBlogger(id: number) {
     const blogger = bloggers.find((b: BloggerType) => b.id === id);
-    return blogger===null;
+    if (blogger) {
+      return blogger;
+    } else {
+      return false;
+    }
   },
 
   createBlogger(name: string, youtubeUrl: string) {
-    if (!isValidYoutubeURI(youtubeUrl, re)) {
-      error.data = {
-        youtubeUrl: youtubeUrl,
-      };
-      error.errorMessage = {
-        message: "invalid youtube URI",
-        field: "youtubeUrl",
-      };
-      error.resultCode = 1;
-
-      return error;
-    } else {
-      const newBlogger: BloggerType = {
-        id: Number(bloggers.length + 1),
-        name: name,
-        youtubeUrl: youtubeUrl,
-      };
-      bloggers.push(newBlogger);
-      return newBlogger;
-    }
+    const newBlogger: BloggerType = {
+      id: Number(bloggers.length + 1),
+      name: name,
+      youtubeUrl: youtubeUrl,
+    };
+    bloggers.push(newBlogger);
+    return newBlogger;
   },
 
   updateBlogger(id: number, name: string, youtubeUrl: string) {
@@ -71,12 +61,6 @@ export const bloggersRepository = {
       error.errorMessage = {
         message: "Invalid ID  or blogger doesn't exists",
         field: "id",
-      };
-      return error;
-    } else if (!isValidYoutubeURI(youtubeUrl, re)) {
-      error.errorMessage = {
-        message: "invalid youtube URI",
-        field: "youtubeURI",
       };
       return error;
     } else {
@@ -102,7 +86,11 @@ export const bloggersRepository = {
     //   return error;
     // }
     const bloggerIndex = bloggers.findIndex((b: BloggerType) => b.id === id);
-    const isDeleted = bloggers.splice(bloggerIndex, 1);
-    return isDeleted!==[]
+    if (bloggerIndex === -1) {
+      return false;
+    } else {
+      bloggers.splice(bloggerIndex, 1);
+      return true;
+    }
   },
 };
