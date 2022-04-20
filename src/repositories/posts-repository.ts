@@ -74,7 +74,7 @@ export const postsHandlers = {
           shortDescription,
           content,
           bloggerId,
-          bloggerName: blogger.name
+          bloggerName: blogger.name,
         };
         const postIndex = posts.findIndex((p: PostType) => p.id === postID);
         posts.splice(postIndex, 1, updatedPost);
@@ -85,18 +85,13 @@ export const postsHandlers = {
     }
   },
   deletePost(postID: number) {
-console.log("Inside delete if")
-
-    
-      const post = posts.find((p: PostType) => p.id === postID);
-      if(post!){
-        return false
-      }else {
-        const postIndex = posts.findIndex((p: PostType) => p.id === postID);
+    const post = posts.find((p: PostType) => p.id === postID);
+    if (!post) {
+      return false;
+    } else {
+      const postIndex = posts.findIndex((p: PostType) => p.id === postID);
       posts.splice(postIndex, 1);
       return post;
-      }
-      
-   
+    }
   },
 };
