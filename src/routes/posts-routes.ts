@@ -73,7 +73,7 @@ postsRouter.put(
       
       res.sendStatus(400)
     }else{
-      isUpdated ? res.sendStatus(204) : res.sendStatus(404);
+      isUpdated ? res.status(204).send(isUpdated) : res.sendStatus(404);
     }
     
   }

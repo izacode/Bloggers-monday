@@ -77,7 +77,7 @@ export const postsHandlers = {
         };
         const postIndex = posts.findIndex((p: PostType) => p.id === postID);
         posts.splice(postIndex, 1, updatedPost);
-        return true;
+        return updatedPost;
       }
     } else {
       return 0;
