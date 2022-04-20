@@ -85,22 +85,18 @@ export const postsHandlers = {
     }
   },
   deletePost(postID: number) {
-    if (postID > posts.length || isNaN(postID)) {
-      console.log("Inside delete if");
-      error.data = {
-        id: postID,
-      };
-      error.errorMessage = {
-        message: "Invalid ID",
-        field: "id",
-      };
-      error.resultCode = 0;
-      return error;
-    } else {
+console.log("Inside delete if")
+
+    
       const post = posts.find((p: PostType) => p.id === postID);
-      const postIndex = posts.findIndex((p: PostType) => p.id === postID);
+      if(post!){
+        return false
+      }else {
+        const postIndex = posts.findIndex((p: PostType) => p.id === postID);
       posts.splice(postIndex, 1);
       return post;
-    }
+      }
+      
+   
   },
 };

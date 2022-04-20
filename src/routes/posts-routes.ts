@@ -80,10 +80,6 @@ postsRouter.put(
 );
 
 postsRouter.delete("/:id", (req: Request, res: Response) => {
-  const deletedPost = postsHandlers.deletePost(+req.params.id);
-  if(deletedPost===error){
-    res.status(404).json(error)
-    return;
-  }
-  res.status(204).json(deletedPost);
+  const isDeleted = postsHandlers.deletePost(+req.params.id);
+  isDeleted ? res.status(204) : res.sendStatus(404);
 });
