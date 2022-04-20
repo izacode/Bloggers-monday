@@ -41,8 +41,8 @@ postsRouter.post(
   inputValidationMiddleware,
 
   (req: Request, res: Response) => {
-    const newPost = postsHandlers.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerID);
-    res.status(201).json(newPost);
+    const newPost = postsHandlers.createPost(req.body.title, req.body.shortDescription, req.body.content, req.body.bloggerId);
+    newPost? res.status(201).json(newPost):res.sendStatus(400);
   }
 );
 
@@ -62,14 +62,20 @@ postsRouter.put(
   inputValidationMiddleware,
 
   (req: Request, res: Response) => {
-    const updatedPost = postsHandlers.updatePost(
+    const isUpdated = postsHandlers.updatePost(
       +req.params.id,
       req.body.title,
       req.body.shortDescription,
       req.body.content,
-      req.body.bloggerID
+      req.body.bloggerId
     );
-    res.status(200).json(updatedPost);
+    if(isUpdated===0){
+      
+      res.sendStatus(400)
+    }else{
+      isUpdated ? res.sendStatus(204) : res.sendStatus(404);
+    }
+    
   }
 );
 

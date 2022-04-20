@@ -1,6 +1,5 @@
 import { posts, PostType, bloggers, BloggerType } from "./db";
 
-
 export type ErrorType = {
   data: {
     id?: number;
@@ -34,20 +33,24 @@ export const postsHandlers = {
   },
 
   createPost(title: string, shortDescription: string, content: string, bloggerId: number) {
-   
-    const newPost: PostType = {
-      id: Number(posts.length + 1),
-      title,
-      shortDescription,
-      content: "Lorem ipsum dolor ",
-      bloggerId,
-    };
+    const blogger = bloggers.find((b: BloggerType) => b.id === bloggerId);
+    if (blogger) {
+      const newPost: PostType = {
+        id: Number(posts.length + 1),
+        title,
+        shortDescription,
+        content: "Lorem ipsum dolor ",
+        bloggerId,
+      };
 
-    posts.push(newPost);
-    const postsWithBloggerNames: PostType[] = posts.map((p: PostType) =>
-      Object.assign(p, { bloggerName: bloggers.find((b: BloggerType) => b.id === p.bloggerId)?.name })
-    );
-    return postsWithBloggerNames.find((p: PostType) => p.id === newPost.id);
+      posts.push(newPost);
+      const postsWithBloggerNames: PostType[] = posts.map((p: PostType) =>
+        Object.assign(p, { bloggerName: bloggers.find((b: BloggerType) => b.id === p.bloggerId)?.name })
+      );
+      return postsWithBloggerNames.find((p: PostType) => p.id === newPost.id);
+    } else {
+      return false;
+    }
   },
 
   getPost(postID: number) {
@@ -56,35 +59,31 @@ export const postsHandlers = {
   },
 
   updatePost(postID: number, title: string, shortDescription: string, content: string, bloggerId: number) {
-    const postWithBloggerName = posts
-      .map((p: PostType) => Object.assign(p, { bloggerName: bloggers.find((b: BloggerType) => b.id === p.bloggerId)?.name }))
-      .find((p: PostType) => p.id === postID);
+    const blogger = bloggers.find((b: BloggerType) => b.id === bloggerId);
+    if (blogger) {
+      const postWithBloggerName = posts
+        .map((p: PostType) => Object.assign(p, { bloggerName: bloggers.find((b: BloggerType) => b.id === p.bloggerId)?.name }))
+        .find((p: PostType) => p.id === postID);
 
-    if (postID > posts.length || isNaN(postID)) {
-      error.data = {
-        id: postID,
-      };
-      error.errorMessage = {
-        message: "Invalid ID",
-        field: "id",
-      };
-      error.resultCode = 0;
-      return error;
-    } else if (postWithBloggerName !== undefined) {
-      const updatedPost: PostType = {
-        id: postID,
-        title,
-        shortDescription,
-        content,
-        bloggerId,
-      };
-      const postIndex = posts.findIndex((p: PostType) => p.id === postID);
-      posts.splice(postIndex, 1, updatedPost);
-      return updatedPost;
+      if (postID > posts.length || isNaN(postID)) {
+        return false;
+      } else if (postWithBloggerName !== undefined) {
+        const updatedPost: PostType = {
+          id: postID,
+          title,
+          shortDescription,
+          content,
+          bloggerId,
+        };
+        const postIndex = posts.findIndex((p: PostType) => p.id === postID);
+        posts.splice(postIndex, 1, updatedPost);
+        return true;
+      }
+    } else {
+      return 0;
     }
   },
   deletePost(postID: number) {
-   
     if (postID > posts.length || isNaN(postID)) {
       console.log("Inside delete if");
       error.data = {
@@ -96,11 +95,11 @@ export const postsHandlers = {
       };
       error.resultCode = 0;
       return error;
-    }else{
+    } else {
       const post = posts.find((p: PostType) => p.id === postID);
-    const postIndex = posts.findIndex((p: PostType) => p.id === postID);
-    posts.splice(postIndex, 1);
-    return post
+      const postIndex = posts.findIndex((p: PostType) => p.id === postID);
+      posts.splice(postIndex, 1);
+      return post;
     }
   },
 };
