@@ -74,6 +74,7 @@ export const postsHandlers = {
           shortDescription,
           content,
           bloggerId,
+          bloggerName: blogger.name
         };
         const postIndex = posts.findIndex((p: PostType) => p.id === postID);
         posts.splice(postIndex, 1, updatedPost);
