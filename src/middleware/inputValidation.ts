@@ -4,14 +4,6 @@ import { validationResult, body } from "express-validator";
 const re = /^https:\/\/([\w-]+\.)+[\w-]+(\/[\w-]+)*\/?$/;
 export const youtubeUrlValidation = body("youtubeUrl").trim().isLength({ min: 1, max: 100 }).matches(re).withMessage("Invalid youtubeUrl");
 
-// export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
-//   const errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     res.status(400).json({ errors: errors.array() });
-//   } else {
-//     next();
-//   }
-// };
 
 export const inputValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);

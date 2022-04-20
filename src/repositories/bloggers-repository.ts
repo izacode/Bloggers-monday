@@ -54,37 +54,27 @@ export const bloggersRepository = {
   },
 
   updateBlogger(id: number, name: string, youtubeUrl: string) {
-    const blogger = bloggers.find((b: BloggerType) => b.id === id);
     const bloggerIndex = bloggers.findIndex((b: BloggerType) => b.id === id);
+    const updatedBlogger: BloggerType = {
+      id,
+      name,
+      youtubeUrl,
+    };
 
-    if (isNaN(id) || !blogger) {
-      error.errorMessage = {
-        message: "Invalid ID  or blogger doesn't exists",
-        field: "id",
-      };
-      return error;
+    if (bloggerIndex === -1) {
+      return false;
     } else {
       const updatedBlogger: BloggerType = {
         id,
         name,
         youtubeUrl,
       };
-
-      const isUpdated = bloggers.splice(bloggerIndex, 1, updatedBlogger);
-      return isUpdated !== [];
+      bloggers.splice(bloggerIndex, 1, updatedBlogger);
+      return true;
     }
   },
 
   deleteBlogger(id: number) {
-    const blogger = bloggers.find((b: BloggerType) => b.id === id);
-
-    // if (isNaN(id) || !blogger) {
-    //   error.errorMessage = {
-    //     message: "Invalid ID  or blogger doesn't exists",
-    //     field: "id",
-    //   };
-    //   return error;
-    // }
     const bloggerIndex = bloggers.findIndex((b: BloggerType) => b.id === id);
     if (bloggerIndex === -1) {
       return false;
