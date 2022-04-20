@@ -4,13 +4,6 @@ import { body, param } from "express-validator";
 import { inputValidationMiddleware,youtubeUrlValidation } from "../middleware/inputValidation";
 
 export const bloggersRouter = Router();
-const errorCheck = (value: any, res: Response) => {
-  if (value.hasOwnProperty("error")) {
-    return res.status(400).json(value);
-  } else {
-    return res.status(201).json(value);
-  }
-};
 
 const bloggerIDValidation = param("id")
   .isInt({ gt: 0 })

@@ -24,12 +24,6 @@ export let error: ErrorType = {
   resultCode: 0,
 };
 
-const re = /^https:\/\/([\w-]+\.)+[\w-]+(\/[\w-]+)*\/?$/;
-
-const isValidYoutubeURI = (field: string, regex: any) => {
-  return regex.test(field);
-};
-
 export const bloggersRepository = {
   getAllBloggers() {
     return bloggers;
@@ -55,12 +49,6 @@ export const bloggersRepository = {
 
   updateBlogger(id: number, name: string, youtubeUrl: string) {
     const bloggerIndex = bloggers.findIndex((b: BloggerType) => b.id === id);
-    const updatedBlogger: BloggerType = {
-      id,
-      name,
-      youtubeUrl,
-    };
-
     if (bloggerIndex === -1) {
       return false;
     } else {

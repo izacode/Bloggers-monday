@@ -20,7 +20,7 @@ const contentValidation = body("content")
   .trim()
   .isLength({ min: 1 })
   .withMessage("Content is missing,it should contain at least one character");
-const bloggerIDValidation = body("bloggerID")
+const bloggerIDValidation = body("bloggerId")
   .isInt({ gt: 0 })
   .withMessage("Invalid ID, it shoud be a number greater then 0,without symbols or letters");
 
