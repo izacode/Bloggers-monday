@@ -48,7 +48,7 @@ postsRouter.post(
 
 postsRouter.get("/:id", (req: Request, res: Response) => {
   const post = postsHandlers.getPost(+req.params.id);
-  res.send(post);
+  post? res.json(post): res.sendStatus(404)
 });
 
 postsRouter.put(
@@ -79,5 +79,5 @@ postsRouter.delete("/:id", (req: Request, res: Response) => {
     res.status(404).json(error)
     return;
   }
-  res.status(200).json(deletedPost);
+  res.status(204).json(deletedPost);
 });
